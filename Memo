@@ -8,10 +8,28 @@ CONTROLE Barrière :
   Test position voiture ->  adresse 0x20  P5 -> Boucle Amont
                                           P6 -> Boucle Aval
   Commmande barriere -> adresse 0x20 P0-P1
+ 
+  Valeurs commandes:  0x35  : Ouverture de la barrierre
+                      0x2e  : Fermeture de la barrière 
+  
+  
+Controle clavier :
+ Adresse -> 0x22
+ 
+ lignes 1   ->   4
+        P0  ->   P3
+        
+ colonnes 1   ->  3
+          P4  ->  P6 
+          
+ valeur     ligne   colonne
+  "1"   ->   P0   +   P4
+  "2"   ->   P0   +   P5
+  ...       ...       ...
   
 QUELQUES COMMANDES UTILES :
 
-FONCTION(int adresse, int valeur){
+FONCTIONEXEMPLE(int adresse, int valeur){
   Wire.beginTransmission(adresse);
   Wire.write(valeur);
   Wire.endTransmission();
