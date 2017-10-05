@@ -1,4 +1,10 @@
 
-CONTTROLE Afficheur : 
+CONTROLE Afficheur : 
   -activation/desactivation retro-eclairage -> adresse 0x21 sur le bit P2
   -controle de l'afficheur LCD -> adresse 0x3B 
+
+CONTROLE Barrière :
+  Test position barrierre ->   adresse 0x20 sur les bits P3-P4
+  Test position voiture ->  adresse 0x20  P5 -> Boucle Amont
+                                          P6 -> Boucle Aval
+  Commmande barriere -> adresse 0x20 P0-P1
