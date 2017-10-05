@@ -8,3 +8,11 @@ CONTROLE Barrière :
   Test position voiture ->  adresse 0x20  P5 -> Boucle Amont
                                           P6 -> Boucle Aval
   Commmande barriere -> adresse 0x20 P0-P1
+  
+QUELQUES COMMANDES UTILES :
+
+FONCTION(int adresse, int valeur){
+  Wire.beginTransmission(adresse);
+  Wire.write(valeur);
+  Wire.endTransmission();
+}
