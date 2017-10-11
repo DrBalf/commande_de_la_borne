@@ -1,4 +1,4 @@
-
+test commit
 CONTROLE Afficheur : 
   -activation/desactivation retro-eclairage -> adresse 0x21 sur le bit P2
   -controle de l'afficheur LCD -> adresse 0x3B 
