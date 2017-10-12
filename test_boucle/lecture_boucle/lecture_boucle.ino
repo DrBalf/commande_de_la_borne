@@ -15,8 +15,11 @@ void loop() {
    Wire.requestFrom(0x20,1);
    while(Wire.available()){
     short boucle = Wire.read();
-   
-    Serial.print(boucle & 0x60, BIN); 
+    boucle=(boucle &0x20)>>5;
+    if (boucle==0){
+      Serial.print("ok_");
+    }
+    Serial.print(boucle, BIN); 
     Serial.print("_"); 
   }
   delay(5000);
