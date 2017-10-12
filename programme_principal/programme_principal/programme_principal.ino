@@ -15,7 +15,6 @@ void loop() {//début du programme
     static int nombreVoiture=0;
     static int nombrePlace=200;
 
-   
    if (testBoucleAmont()==0 && testBoucleAval()==1){ //selection d'entrée
           ouvrir(); 
           while (testBoucleAmont()==0 && testBoucleAval()==1 && testTempo==1){
@@ -38,7 +37,7 @@ void loop() {//début du programme
     
       
 
-     
+ 
    if (testBoucleAval()==0 && testBoucleAmont()==1){//selection de sortie
     
       ouvrir();//début du sous programme d'ouverture de la barriére pour véhicule sortant 

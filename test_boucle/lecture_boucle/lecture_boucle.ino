@@ -15,7 +15,7 @@ void loop() {
    Wire.requestFrom(0x20,1);
    while(Wire.available()){
     short boucle = Wire.read();
-    boucle=(boucle &0x20)>>5;
+    boucle=(boucle & 0x20)>>5; 
     if (boucle==0){
       Serial.print("ok_");
     }
