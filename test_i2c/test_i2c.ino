@@ -12,7 +12,7 @@ void setup() {
 void loop() {
   
   Wire.beginTransmission(0x20);
-  Wire.write(0xFD);
+  Wire.write(0xFE);
   delay(1000);
   Wire.endTransmission();
 
