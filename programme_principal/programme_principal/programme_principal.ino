@@ -13,8 +13,10 @@ void loop() {//début du programme
     int tempo=0, testTempo=1; //initialisation des variable de tempo
     static int nombreVoiture=0; //initialisation du nombre de voiture
     static int nombrePlace=200; //initialisation du nombre de place
-    
+
+   
    if (testBoucleAmont()==0 && testBoucleAval()==1){ //selection d'entrée
+    if(validationCarte()==0){
           ouvrir(); //appel de la fonction d'ouverture de la barriere
           while (testBoucleAmont()==0 && testBoucleAval()==1 && testTempo==1){ // test de position sur la boucle aval
               tempo++; //depart de la tempo.
@@ -30,8 +32,9 @@ void loop() {//début du programme
                       nombrePlace--;
                   }
           }
+      }
         fermer(); //appel de la fonction de fermeture de la barriere  
-     }//fin du sous programme    
+    }//fin du sous programme    
      
     
       

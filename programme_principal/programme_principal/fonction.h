@@ -10,6 +10,7 @@ void ouvrir (void);
 
 void fermer(void);
 
+int validationCarte (void); 
 
 
 #endif 
