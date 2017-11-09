@@ -1,6 +1,6 @@
+#include "Boucle.h"
 #include <Wire.h>
-#include "Arduino.h"
-#include "fonction.h"
+#include <arduino.h>
 
 
 int testBoucleAmont (){
@@ -27,28 +27,3 @@ int testBoucleAval (){
                               //amont que l'on décale ensuite de 6 bit pour avoir une seul valeur 
   return boucle;
 }
-
-void ouvrir (){
-  Wire.beginTransmission(0x20); //on demare la transmission sur l'adresse 0x20
-  Wire.write(0xFD);           //on ecrit sur l'adresse 0x20 la valeur 0xFD qui 
-                              //correspond a la valeur d'ouvertur de barriere 
-  Wire.endTransmission();     //fin de transmission
-}
-
-void fermer (){
-  Wire.beginTransmission(0x20);
-  Wire.write(0xFE);         //on ecrit sur l'adresse 0x20 la valeur 0xFE qui 
-  delay(50);                          //correspond a la valeur de fermeture de barriere 
-  Wire.endTransmission();
-}
-
-int validationCarte (){
-  short valeurPuce;
-  Wire.requestFrom(0x21, 1);
-  while(Wire.available()){
-    valeurPuce=Wire.read();
-  }
-  valeurPuce=(valeurPuce & 0x01);
-  return valeurPuce;  
-}
-

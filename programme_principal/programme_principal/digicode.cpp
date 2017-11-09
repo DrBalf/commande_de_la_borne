@@ -1,9 +1,9 @@
-#include  <Wire.h>
-#include "Arduino.h"
-#include "fonction.h"
+#include "digicode.h"
+#include <Wire.h>
+#include <arduino.h>
 
 int pushButon(){
-  short lecture;
+  short lecture=NULL;
   short i=1;
   Wire.beginTransmission(0x38);
   Wire.write(0xF0);
@@ -13,23 +13,18 @@ int pushButon(){
     while(Wire.available()){
       lecture=Wire.read(); 
     }
-    if(lecture!=0xF0){
-     i=0;
-     while(lecture!=0xF0){
-      Wire.requestFrom(0x38, 1);
-      while(Wire.available()){
-      lecture=Wire.read();
-      Serial.print("test"); 
-    }
-     }
+    if (lecture!=0xF0){
+      i=0;
     }
   }
-  return i;
+  while(lecture==0xF0){
+    Serial.print("test");
+  }
 }
 
 int lectureLigne(){
   short lectureL;
-  short ligne;
+  short ligne=NULL;
   Wire.beginTransmission(0x38);
   Wire.write(0xF0);
   Wire.endTransmission();
@@ -60,7 +55,7 @@ int lectureLigne(){
 
 int lectureColonne(){
   short lectureC;
-  short colonne;
+  short colonne=NULL;
   Wire.beginTransmission(0x38);
   Wire.write(0x0F);
   Wire.endTransmission();
@@ -90,7 +85,7 @@ int lectureColonne(){
 }
 
 char traductionClavier(int ligne, int colonne){
-  char clavier[4][4] = {{'1','2','3','r'},{'4','5','6','r'},{'7','8','9','G'},{'*','0','#','r'}};
+  char clavier[4][4] = {{'1','2','3',NULL},{'4','5','6',NULL},{'7','8','9','G'},{'*','0','#',NULL}};
   char caractere = clavier[ligne][colonne];
   Serial.print("caractere:");
   Serial.println(caractere);
@@ -100,7 +95,7 @@ char traductionClavier(int ligne, int colonne){
 int validationCode(char* code){
   int i=0;
   int validation=0;
-  char codeRef[4]={'1','2','3','4'};
+  char* codeRef[4]={'1','2','3','4'};
   for(i=0;i<=3;i++){
     if(code[i]==codeRef[i]){
       validation=1;
@@ -128,6 +123,3 @@ char* saisieCode(){
   }
   return ptrCode;
 }
-
-
-

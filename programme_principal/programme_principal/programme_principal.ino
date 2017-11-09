@@ -1,7 +1,9 @@
 #include <Wire.h>
 #include "i2c.h"
-#include "Arduino.h"
-#include "fonction.h"
+#include "Boucle.h"
+#include "barriere.h"
+#include "digicode.h"
+#include "carte.h"
 
 void setup() {
   Wire.begin();
@@ -16,7 +18,7 @@ void loop() {//début du programme
 
    
    if (testBoucleAmont()==0 && testBoucleAval()==1){ //selection d'entrée
-    if(validationCarte()==0){
+    if(validationCarte()==0 || validationCode(saisieCode())==1){
           ouvrir(); //appel de la fonction d'ouverture de la barriere
           while (testBoucleAmont()==0 && testBoucleAval()==1 && testTempo==1){ // test de position sur la boucle aval
               tempo++; //depart de la tempo.

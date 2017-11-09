@@ -11,10 +11,7 @@ Serial.begin(9600);
 }
 
 void loop(){
- pushButon();
- char colonne = lectureColonne();
- char ligne = lectureLigne();
- tab[0]traductionClavier(ligne,colonne);
+ validationCode(saisieCode());
  }
 
 

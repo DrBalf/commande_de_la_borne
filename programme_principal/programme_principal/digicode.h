@@ -1,5 +1,5 @@
-#ifndef FONCTION_H
-#define FONCTION_H
+#ifndef DIGICODE_H
+#define DIGICODE_H
 
 int lectureColonne(void);
 
@@ -13,4 +13,4 @@ char* saisieCode(void);
 
 int validationCode(char*);
 
-#endif
+#endif 
