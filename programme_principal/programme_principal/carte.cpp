@@ -9,5 +9,5 @@ int validationCarte (){
     valeurPuce=Wire.read();
   }
   valeurPuce=(valeurPuce & 0x01);
-  return valeurPuce;  
+  return !valeurPuce;  
 }
