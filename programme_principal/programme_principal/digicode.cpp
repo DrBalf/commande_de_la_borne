@@ -5,16 +5,17 @@
 int pushButon(){
   short lecture;
   short i=1;
-
-  while(i==1){
-    Wire.requestFrom(0x22, 1);
-    while(Wire.available()){
-      lecture=Wire.read(); 
-    }
+  Wire.beginTransmission(0x22);
+  Wire.write(0xF0);
+  Wire.endTransmission();
+  Wire.requestFrom(0x22, 1);
+  while(Wire.available()){
+    lecture=Wire.read(); 
     if(lecture!=0xF0){
      i=0;
     }
   }
+  return i;
 }
 
 int lectureLigne(){
@@ -85,19 +86,24 @@ char traductionClavier(int ligne, int colonne){
   return caractere;
 }
 
-int validationCode(char* code){
+int validationCode(){
   int i=0;
   int validation=0;
   char codeRef[4]={'1','4','7','2'};
-  for(i=0;i<=3;i++){
-    if(code[i]==codeRef[i]){
-      validation=1;
+  char* code;
+  if (pushButon()==0){
+    code=saisieCode();
+    for(i=0;i<=3;i++){
+      if(code[i]==codeRef[i]){
+        validation=1;
+      }
+      else{
+        validation=0;
+        Serial.println("code errone");
+      }  
     }
-    else{
-      validation=0;
-    }  
+    return validation;
   }
-  return validation;
 }
 
 char* saisieCode(){
@@ -105,12 +111,14 @@ char* saisieCode(){
   char* ptrCode; 
   ptrCode = new char[4];
   for(i=0;i<=3;i++){
-    pushButon();
+    while (pushButon()==1);
     char colonne = lectureColonne();
     char ligne = lectureLigne();
     ptrCode[i]=traductionClavier(ligne,colonne);
-    delay(250);
+    delay(20);
+    while (pushButon()==0);
   }
+  Serial.print("ptrCode :");
   Serial.print(ptrCode);
   return ptrCode;
 }

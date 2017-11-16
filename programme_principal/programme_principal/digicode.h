@@ -11,6 +11,6 @@ char traductionClavier(int,int);
 
 char* saisieCode(void);
 
-int validationCode(char*);
+int validationCode();
 
 #endif 

@@ -7,7 +7,11 @@ int validationCarte (){
   Wire.requestFrom(0x21, 1);
   while(Wire.available()){
     valeurPuce=Wire.read();
+    Serial.print("valeurPuce avant masque : ");
+    Serial.println(valeurPuce, BIN);
+    valeurPuce=(valeurPuce & 0x01);
+    Serial.print("valeurPuce : ");
+    Serial.println(valeurPuce, BIN);
   }
-  valeurPuce=(valeurPuce & 0x01);
   return valeurPuce;  
 }
