@@ -4,8 +4,8 @@
 
 int presenceCarte (void);
 
-char* lectureCarte(void);
+char* lectureCarte(char*);
 
-int validationCarte(char*);
+int validationCarte(void);
 
 #endif 
