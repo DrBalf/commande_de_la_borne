@@ -11,7 +11,9 @@ Serial.begin(9600);
 }
 
 void loop(){
- validationCode(saisieCode());
+ if (validationCode(saisieCode())==1){
+  Serial.print("bravo");
+ }
  }
 
 

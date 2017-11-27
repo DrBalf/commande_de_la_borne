@@ -9,45 +9,60 @@ int presenceCarte (){
     carteIn=Wire.read();
     carteIn=(carteIn & 0x01);
   }
+
   return carteIn;  
 }
 
-char* lectureCarte(){
-  short lecture;
-  char valeurPuce[4];
+char* lectureCarte(char* valeurPuce){
   int i=0;
-  Wire.requestFrom(0x21, 1);
-  while (Wire.available()){
-    lecture=Wire.read();
-    lecture=lecture|0x02;     
+  if (presenceCarte()==0){
+
+      accesCarteOn();
+           
+      Wire.beginTransmission(0x50);
+      Wire.write(0x00);
+      Wire.endTransmission();
+      
+      Wire.requestFrom(0x50, 4);
+      while (Wire.available()){
+        valeurPuce[i]=Wire.read();
+        i++;
+      }
+
+      accesCarteOff();
   }
-  
-  Wire.beginTransmission(0x21);
-  Wire.write(lecture);
-  Wire.endTransmission();
-  
-    Wire.requestFrom(0x50, 4);
-    while (Wire.available()){
-      valeurPuce[i]=Wire.read();
-      Serial.println(valeurPuce[i]);
-      i++;
-    }
-  while (presenceCarte()==0);
   return valeurPuce; 
 }
 
-int validation (char* tbl){
+int validationCarte (){
   int validation=0;
   char adresseRef[4]={'3','4','5','6'};
+  char valeurPuce[4]={'0','0','0','0'};
+  char* adresseValeur;
+  adresseValeur=lectureCarte(valeurPuce);
   for(int i=0;i<4;i++){
-      if(tbl[i]==adresseRef[i]){
+      if(adresseValeur[i]==adresseRef[i]){
         validation=1;
-        Serial.println(tbl[i]);
       }
       else{
-        validation=0;
+        validation=0;        
       }
   }
   return validation;
 }
 
+void accesCarteOn (void){
+                  
+      Wire.beginTransmission(0x21);
+      Wire.write(0x06);
+      Wire.endTransmission();
+  
+}
+
+void accesCarteOff (void){
+
+      Wire.beginTransmission(0x21);
+      Wire.write(0x05);
+      Wire.endTransmission();
+  
+}

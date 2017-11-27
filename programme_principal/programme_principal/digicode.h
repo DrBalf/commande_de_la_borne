@@ -1,6 +1,7 @@
 #ifndef DIGICODE_H
 #define DIGICODE_H
 
+
 int lectureColonne(void);
 
 int lectureLigne(void);

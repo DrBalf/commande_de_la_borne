@@ -1,11 +1,16 @@
 #ifndef CARTE_H
 #define CARTE_H
 
+void initEEPROM(void);
 
 int presenceCarte (void);
 
+int validationCarte(void);
+
 char* lectureCarte(char*);
 
-int validationCarte(void);
+void accesCarteOn(void);
+
+void accesCarteOff(void);
 
 #endif 

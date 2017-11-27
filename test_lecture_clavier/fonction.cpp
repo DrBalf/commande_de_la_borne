@@ -2,38 +2,13 @@
 #include "Arduino.h"
 #include "fonction.h"
 
-int pushButon(){
-  short lecture;
-  short i=1;
-  Wire.beginTransmission(0x38);
-  Wire.write(0xF0);
-  Wire.endTransmission();
-  while(i==1){
-    Wire.requestFrom(0x38, 1);
-    while(Wire.available()){
-      lecture=Wire.read(); 
-    }
-    if(lecture!=0xF0){
-     i=0;
-     while(lecture!=0xF0){
-      Wire.requestFrom(0x38, 1);
-      while(Wire.available()){
-      lecture=Wire.read();
-      Serial.print("test"); 
-    }
-     }
-    }
-  }
-  return i;
-}
-
 int lectureLigne(){
   short lectureL;
   short ligne;
-  Wire.beginTransmission(0x38);
+  Wire.beginTransmission(0x22);
   Wire.write(0xF0);
   Wire.endTransmission();
-  Wire.requestFrom(0x38, 1);
+  Wire.requestFrom(0x22, 1);
   while(Wire.available()){
     lectureL = Wire.read();
     //Serial.print("ligne:");
@@ -61,10 +36,10 @@ int lectureLigne(){
 int lectureColonne(){
   short lectureC;
   short colonne;
-  Wire.beginTransmission(0x38);
+  Wire.beginTransmission(0x22);
   Wire.write(0x0F);
   Wire.endTransmission();
-  Wire.requestFrom(0x38, 1);
+  Wire.requestFrom(0x22, 1);
   while(Wire.available()){
     lectureC = Wire.read();
     //Serial.print("colonne:");
@@ -91,8 +66,8 @@ int lectureColonne(){
 
 char traductionClavier(int ligne, int colonne){
   char clavier[4][4] = {{'1','2','3','r'},{'4','5','6','r'},{'7','8','9','G'},{'*','0','#','r'}};
-  char caractere = clavier[ligne][colonne];
-  Serial.print("caractere:");
+  char caractere = clavier[colonne][ligne];
+    Serial.print("caractere:");
   Serial.println(caractere);
   return caractere;
 }
@@ -107,27 +82,49 @@ int validationCode(char* code){
     }
     else{
       validation=0;
-      Serial.println("code errone");
     }  
   }
+  //Serial.println("_");
+  //Serial.print(validation);
+  //Serial.print("_");
   return validation;
 }
 
 char* saisieCode(){
   int i;
+  char code[4]={'0','0','0','0'}; 
   char* ptrCode; 
-  ptrCode = new char[4];
+  ptrCode=code;
   for(i=0;i<=3;i++){
-    pushButon();
+    while(pushButon()==1);
     char colonne = lectureColonne();
-    char ligne = lectureLigne();
+    char ligne = lectureLigne();    
     ptrCode[i]=traductionClavier(ligne,colonne);
+    delay(20);
+    while(pushButon()==0);
   }
-  for(i=0;i<=3;i++){
-    Serial.print(ptrCode[i]);
-  }
+  Serial.print(ptrCode);
   return ptrCode;
 }
 
-
+int pushButon(){
+  short lecture;
+  short i=1;
+  Wire.beginTransmission(0x22);
+  Wire.write(0xF0);
+  Wire.endTransmission();
+    Wire.requestFrom(0x22, 1);
+    while(Wire.available()){
+      lecture=Wire.read(); 
+    }
+    if(lecture!=0xF0){
+     i=0;
+     /*Wire.requestFrom(0x22, 1);
+      while(Wire.available()){
+      while(Wire.read()==0xF0);
+      } */
+    }
+  Serial.println(i);
+  return i;
+}
 
