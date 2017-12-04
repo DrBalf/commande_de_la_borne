@@ -1,6 +1,7 @@
 #include "digicode.h"
 #include <Wire.h>
 #include <arduino.h>
+#include "affiche.h"
 
 int lectureLigne(){
   short lectureL;
@@ -11,8 +12,6 @@ int lectureLigne(){
   Wire.requestFrom(0x22, 1);
   while(Wire.available()){
     lectureL = Wire.read();
-    //Serial.print("ligne:");
-    //Serial.println(lectureL,HEX);
      switch(lectureL){
        case 0xE0:
        ligne=0;
@@ -27,8 +26,6 @@ int lectureLigne(){
        ligne=3;
       break;
     }
-    //Serial.print("ligne:");
-    //Serial.println(ligne);
   }
   return ligne;
 }
@@ -42,8 +39,6 @@ int lectureColonne(){
   Wire.requestFrom(0x22, 1);
   while(Wire.available()){
     lectureC = Wire.read();
-    //Serial.print("colonne:");
-    //Serial.println(lectureC,HEX);
     switch(lectureC){
        case 0xE:
        colonne=0;
@@ -58,8 +53,6 @@ int lectureColonne(){
        colonne=3;
       break;
     }
-    //Serial.print("colonne:");
-    //Serial.println(colonne);
   }
   return colonne;
 }
@@ -77,18 +70,25 @@ int validationCode(){
   int validation=0;
   char* code;
   char codeRef[4]={'1','2','3','4'};
-  code=saisieCode();
-  for(i=0;i<=3;i++){
-    if(code[i]==codeRef[i]){
-      validation=1;
+  if (pushButon()==0){
+    code=saisieCode();
+    for(i=0;i<=3;i++){
+      if(code[i]==codeRef[i]){
+        validation=1;
+      }
+      else{
+        validation=0;
+      }  
+    }
+    if (validation==1){
+        envoyerMessage(0x3B, MESSAGE3, LIGNE1);
+        envoyerMessage(0x3B, MESSAGE4, LIGNE2);
     }
     else{
-      validation=0;
-    }  
+        envoyerMessage(0x3B, MESSAGE9, LIGNE1);
+        envoyerMessage(0x3B, MESSAGE10, LIGNE2);
+    }
   }
-  //Serial.println("_");
-  //Serial.print(validation);
-  //Serial.print("_");
   return validation;
 }
 

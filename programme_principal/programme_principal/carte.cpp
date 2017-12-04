@@ -1,6 +1,7 @@
 #include "carte.h"
 #include <Wire.h>
 #include <arduino.h>
+#include "affiche.h"
 
 int presenceCarte (){
   short carteIn;
@@ -39,14 +40,24 @@ int validationCarte (){
   char adresseRef[4]={'3','4','5','6'};
   char valeurPuce[4]={'0','0','0','0'};
   char* adresseValeur;
-  adresseValeur=lectureCarte(valeurPuce);
-  for(int i=0;i<4;i++){
-      if(adresseValeur[i]==adresseRef[i]){
-        validation=1;
-      }
-      else{
-        validation=0;        
-      }
+  if (presenceCarte()==0){
+    adresseValeur=lectureCarte(valeurPuce);
+    for(int i=0;i<4;i++){
+        if(adresseValeur[i]==adresseRef[i]){
+          validation=1;
+        }
+        else{
+          validation=0;        
+        }
+    }
+    if (validation==1){
+        envoyerMessage(0x3B, MESSAGE3, LIGNE1);
+        envoyerMessage(0x3B, MESSAGE4, LIGNE2);
+    }
+    else{
+        envoyerMessage(0x3B, MESSAGE7, LIGNE1);
+        envoyerMessage(0x3B, MESSAGE8, LIGNE2);
+    }
   }
   return validation;
 }

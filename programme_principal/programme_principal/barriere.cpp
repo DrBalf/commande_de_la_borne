@@ -1,6 +1,9 @@
 #include "barriere.h"
 #include <Wire.h>
 #include <arduino.h>
+#include "affiche.h"
+#include "digicode.h"
+#include "carte.h"
 
 void ouvrir (){
   Wire.beginTransmission(0x20); //on demare la transmission sur l'adresse 0x20
@@ -15,3 +18,23 @@ void fermer (){
   delay(50);                          //correspond a la valeur de fermeture de barriere 
   Wire.endTransmission();
 }
+
+int validation (void){
+  
+    int validation=0;
+
+    if (validationCarte()==1 || validationCode()==1){
+        validation=1;   
+    }
+
+    while (validation!=1){
+      
+    setEclairage(0x21, 1);
+    envoyerMessage(0x3B, MESSAGE1, LIGNE1);
+    envoyerMessage(0x3B, MESSAGE2, LIGNE2);
+        
+    }
+       
+    return validation;
+}
+

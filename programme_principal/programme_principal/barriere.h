@@ -5,4 +5,6 @@ void ouvrir (void);
 
 void fermer(void);
 
+int validation(void);
+
 #endif 
