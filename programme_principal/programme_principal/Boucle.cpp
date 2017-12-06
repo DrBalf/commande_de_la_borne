@@ -22,7 +22,7 @@ int testBoucleAval (){
   Wire.requestFrom(0x20,1);
   while(Wire.available()){
       boucle = Wire.read();
-      }
+  }
   boucle=(boucle & 0x40)>>6; //on crée un mask pour selectionner le bit de detection de la boucle
                               //amont que l'on décale ensuite de 6 bit pour avoir une seul valeur 
   return boucle;

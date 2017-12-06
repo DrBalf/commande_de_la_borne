@@ -22,19 +22,14 @@ void fermer (){
 int validation (void){
   
     int validation=0;
-
+ 
     if (validationCarte()==1 || validationCode()==1){
+        setEclairage(0x21, 1);
+        envoyerMessage(0x3B, MESSAGE3, LIGNE1);
+        envoyerMessage(0x3B, MESSAGE4, LIGNE2);
         validation=1;   
     }
-
-    while (validation!=1){
-      
-    setEclairage(0x21, 1);
-    envoyerMessage(0x3B, MESSAGE1, LIGNE1);
-    envoyerMessage(0x3B, MESSAGE2, LIGNE2);
-        
-    }
-       
+           
     return validation;
 }
 

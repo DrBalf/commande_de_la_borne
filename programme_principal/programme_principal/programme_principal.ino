@@ -6,9 +6,10 @@
 #include "carte.h"
 #include "affiche.h"
 
+
 void setup() {
   Wire.begin();
-  initI2C(122);
+  initI2C(255);
   Serial.begin(9600);
   initAfficheur(0x3B);
 }
@@ -17,9 +18,16 @@ void loop() {//début du programme
     int tempo=0, testTempo=1; //initialisation des variable de tempo
     static int nombreVoiture=0; //initialisation du nombre de voiture
     static int nombrePlace=200; //initialisation du nombre de place
+    static int drapeau=0;
 
    
-   if (testBoucleAmont()==0 && testBoucleAval()==1){ //selection d'entrée      
+   if (testBoucleAmont()==0 && testBoucleAval()==1){ //selection d'entrée
+    if (drapeau==0){
+          setEclairage(0x21, 1);
+          envoyerMessage(0x3B, MESSAGE1, LIGNE1);
+          envoyerMessage(0x3B, MESSAGE2, LIGNE2);
+          drapeau=1;      
+    }
     if (validation()==1){
           ouvrir(); //appel de la fonction d'ouverture de la barriere
           while (testBoucleAmont()==0 && testBoucleAval()==1 && testTempo==1){ // test de position sur la boucle aval
@@ -27,7 +35,8 @@ void loop() {//début du programme
               delay(3); // si la voiture rest plus de 30 sec 
               if(tempo==500){ // testTempo=0 donc le test d'ouverture n'est plus valid 
                   testTempo=0; // la barriere se ferme
-                  envoyerMessage(0x3B, MESSAGE10, LIGNE1);
+                  setEclairage(0x21, 1);
+                  envoyerMessage(0x3B, MESSAGE8, LIGNE1);
               }
           }    
           if (testBoucleAval()==0 || testBoucleAmont()==1){  //si la voiture avance 
@@ -39,10 +48,16 @@ void loop() {//début du programme
           }
       }        
         fermer(); //appel de la fonction de fermeture de la barriere
+    }//fin du sous programme    
+   else{
+        drapeau=0;
         effacerAfficheur(0x3B); 
         setEclairage(0x21, 0);
-    }//fin du sous programme    
-     
+   }
+
+
+
+   
 
    if (testBoucleAval()==0 && testBoucleAmont()==1){//selection de sortie
       ouvrir();//ouverture de la barriére
