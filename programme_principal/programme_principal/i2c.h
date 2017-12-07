@@ -21,7 +21,7 @@ void initI2C(int vitesse){
   d'ou
   489 Hz<SCL<1 000 000 Hz*/
   sbi(TWSR, TWPS0);  //reduction de la vitesse de transmission sur le
-  cbi(TWSR, TWPS1);  //bus (ici 4081,63 Hz)
+  sbi(TWSR, TWPS1);  //bus (ici 4081,63 Hz)
   TWBR=vitesse;    //valeur comprise entre 0 et 255. Une valeur de 122 donne de bon résultats
 }
 #endif

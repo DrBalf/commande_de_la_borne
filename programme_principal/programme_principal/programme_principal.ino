@@ -5,13 +5,14 @@
 #include "digicode.h"
 #include "carte.h"
 #include "affiche.h"
-
+#include "affiche_terminal.h"
 
 void setup() {
   Wire.begin();
-  initI2C(255);
-  Serial.begin(9600);
+  initI2C(60);
+  Serial3.begin(9600);
   initAfficheur(0x3B);
+  formeTerminal();
 }
 
 void loop() {//début du programme
@@ -44,6 +45,7 @@ void loop() {//début du programme
                       while(testBoucleAval()==0 || testBoucleAmont()==0); //temps qu'elle na pas quite les boucle
                       nombreVoiture++; // on incrémente le nombre de voiture sur le parking si la voiture rentre
                       nombrePlace--;
+                      afficheTerminal(nombreVoiture,nombrePlace);
                   }
           }
       }        
@@ -70,7 +72,7 @@ void loop() {//début du programme
           while(testBoucleAmont()==0 || testBoucleAval()==0);//temps qu'elle na pas quite les boucle
           nombreVoiture--;
           nombrePlace++;
-          
+          afficheTerminal(nombreVoiture,nombrePlace);          
       } 
       fermer();
       effacerAfficheur(0x3B);
