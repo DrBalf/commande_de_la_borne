@@ -1,3 +1,4 @@
+#include <terminal.h>
 #include <Wire.h>
 #include "i2c.h"
 #include "Boucle.h"
@@ -46,6 +47,7 @@ void loop() {//début du programme
                       nombreVoiture++; // on incrémente le nombre de voiture sur le parking si la voiture rentre
                       nombrePlace--;
                       afficheTerminal(nombreVoiture,nombrePlace);
+                      vehiculeEntre();                      
                   }
           }
       }        
@@ -72,7 +74,8 @@ void loop() {//début du programme
           while(testBoucleAmont()==0 || testBoucleAval()==0);//temps qu'elle na pas quite les boucle
           nombreVoiture--;
           nombrePlace++;
-          afficheTerminal(nombreVoiture,nombrePlace);          
+          afficheTerminal(nombreVoiture,nombrePlace); 
+          vehiculeSorti();        
       } 
       fermer();
       effacerAfficheur(0x3B);

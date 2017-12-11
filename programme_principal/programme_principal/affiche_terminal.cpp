@@ -3,7 +3,8 @@
 
 
 void afficheTerminal(int nombreVoiture, int nombrePlace){
-  
+    
+    
     terminalCouleur(31, 40);
     terminalPosition(10,58);
     Serial3.println(nombreVoiture, DEC);
@@ -11,17 +12,6 @@ void afficheTerminal(int nombreVoiture, int nombrePlace){
     terminalCouleur(31, 40);
     terminalPosition(12,55);
     Serial3.println(nombrePlace, DEC);
-
-    if (nombreVoiture==nombreVoiture+1){
-        terminalCouleur(31, 40);
-        terminalPosition(12,57);
-        Serial3.println("Entre");
-    }
-    if (nombreVoiture==nombreVoiture-1){
-        terminalCouleur(31, 40);
-        terminalPosition(12,57);
-        Serial3.println("Sorti");
-    }
      
 }
 
@@ -61,8 +51,8 @@ void formeTerminal (void){
     terminalPosition(14,30);
     Serial3.print("*  Le dernier vehicule est ");
     terminalCouleur(31, 40);
-    terminalPosition(14,59);
-    Serial3.print("  *");
+    terminalPosition(14,64);
+    Serial3.print("*");
 
     terminalCouleur(31, 40);
     terminalPosition(15,30);
@@ -73,4 +63,21 @@ void formeTerminal (void){
     Serial3.print("***********************************");
     
 }
+
+void vehiculeEntre (void){
+  
+   terminalCouleur(31, 40);
+   terminalPosition(14,57);
+   Serial3.println("Entre");
+   
+}
+
+void vehiculeSorti (void){
+  
+   terminalCouleur(31, 40);
+   terminalPosition(14,57);
+   Serial3.println("Sorti");
+   
+}
+
 

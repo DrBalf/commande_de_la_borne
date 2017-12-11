@@ -9,12 +9,12 @@
 
 #define MESSAGE1 "    Bonjour     "
 #define MESSAGE2 "Entrez code SVP "
-#define MESSAGE3 "indentite valide"
-#define MESSAGE4 "  Bienvenu      "
+#define MESSAGE3 " Identite valide"
+#define MESSAGE4 "   bienvenue    "
 #define MESSAGE5 "   Au revoir    "
 #define MESSAGE6 " et a bientot   "
-#define MESSAGE7 "indentite errone"
-#define MESSAGE8 "Quittez la place"
+#define MESSAGE7 " Identite errone"
+#define MESSAGE8 "quittez la place"
 
 
 

@@ -5,4 +5,8 @@ void afficheTerminal(int,int);
 
 void formeTerminal (void);
 
+void vehiculeSorti (void);
+
+void vehiculeEntre (void);
+
 #endif 
