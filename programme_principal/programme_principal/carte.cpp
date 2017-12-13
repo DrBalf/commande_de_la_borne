@@ -15,16 +15,25 @@ int presenceCarte (){ //fonction permettant de détecter ou non un carte
   /*on lit a l'adresse 0x21 qui correspond a l'adresse
   du PCF8574. Ceci nous permettra de requpérer la trame
   qui nous indiquera si un carte a été detecter*/
-  
+  Serial.println(carteIn);
   return carteIn; //on renvoie la valeur qui correspond 
             //a la présence (0) ou non (1) de carte. 
 }
 
 char* lectureCarte(char* valeurPuce){ //fonction permettant de lire le code de la carte
   int i=0;
+  char valeurCodeEEPROM[5]={'3','4','5','6','\0'};
+  
   if (presenceCarte()==0){ // on exécute le programe que si la carte est detecter
 
-      accesCarteOn(); //on autosrise la lecture de la carte
+      accesCarteOn(); //on autosrise la lecture de la carte        
+
+      Wire.beginTransmission(0x50);
+      Wire.write((char)(0x00));
+      Wire.write(valeurCodeEEPROM,4);
+      Wire.endTransmission();
+
+      Serial.println (valeurCodeEEPROM);
            
       Wire.beginTransmission(0x50); // ici on indique que l'on veux lire 
       Wire.write(0x00); // les valeurs a partire de l'adresse 0x00
@@ -32,12 +41,15 @@ char* lectureCarte(char* valeurPuce){ //fonction permettant de lire le code de l
         
       Wire.requestFrom(0x50, 4); // on lit les 4 premier octet
       while (Wire.available()){
-        valeurPuce[i]=Wire.read(); //on enregistres chaque valeur a une  
+        valeurPuce[i]=Wire.read(); //on enregistres chaque valeur a une 
+        Serial.println("valeurPuce"); 
+        Serial.println(valeurPuce[i]);
         i++;                       //adresse la première étant valeurPuce[0]
       }
 
       accesCarteOff(); //on ferme l'acces a la carte
   }
+  Serial.println(valeurPuce);
   return valeurPuce; 
 }
 

@@ -11,10 +11,17 @@ void setup() {
 
 void loop() {
   char* valeurEEPROM;
-  
+
+  lectureEEPROM(0x00);
+  Serial.println("----------------------");
   ecritureCodeEEPROM();
   valeurEEPROM=lectureEEPROM(0x00);
-  Serial.println(valeurEEPROM);
+  for(int i=0;i<4;i++){
+  Serial.println(valeurEEPROM[i]);
+  }
+  Serial.println("======================");
+  lectureEEPROM(0x00);
+  Serial.println("**********************");
   delay(5000);
 
 }

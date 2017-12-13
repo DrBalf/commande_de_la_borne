@@ -4,22 +4,25 @@
 
 void ecritureCodeEEPROM (){
 
-  char valeurCodeEEPROM[4]={'3','4','5','6'};
+  char valeurCodeEEPROM[5]={'4','6','2','3','\0'};
 
   Wire.beginTransmission(0x57);
-  Wire.write(0x00);
+  Wire.write((char)(0x00));
+  Wire.write(valeurCodeEEPROM,4);
   Wire.endTransmission();
   
-  Wire.beginTransmission(0x57);
-  Wire.write(valeurCodeEEPROM, 4);
-  Wire.endTransmission();
+  /*Wire.beginTransmission(0x57);
+  Wire.write(valeurCodeEEPROM,1);
+  Wire.endTransmission();*/
+
+  Serial.println (valeurCodeEEPROM);
   
 }
 
 char* lectureEEPROM(int adresse){
 
-  char valeurEEPROM[4]={'9','9','9','9'};
-  char* adresseValeurEEPROM;
+  char valeurEEPROM[5]={'0','0','0','0','\0'};
+  char* adresseValeurEEPROM=NULL;
   int i=0;
   
   Serial.print("valeurEEPROM : ");
@@ -29,29 +32,21 @@ char* lectureEEPROM(int adresse){
   Wire.write(adresse);
   Wire.endTransmission();
 
-  Wire.requestFrom(0x57, 4); // on lit les 4 premier octet
-      while (Wire.available()){
-        valeurEEPROM[i]=Wire.read(); //on enregistres chaque valeur a une  
-        i++;                       //adresse la première étant valeurPuce[0]
-      }
+  for (i=0;i<4;i++){
+  Wire.requestFrom(0x57, 1); // on lit les 4 premier octet
+  valeurEEPROM[i]=Wire.read(); //on enregistres chaque valeur a une  
+                               //adresse la première étant valeurPuce[0]
+  }
       
   adresseValeurEEPROM=valeurEEPROM;
-  Serial.print("adresse valeur 1: ");
-  Serial.println(&valeurEEPROM[0]);
-  Serial.print("adresse valeur 2: ");
-  Serial.println(&valeurEEPROM[1]);
-  Serial.print("adresse valeur 3: ");
-  Serial.println(&valeurEEPROM[2]);
-  Serial.print("adresse valeur 4: ");
-  Serial.println(&valeurEEPROM[3]);
-  Serial.print("adresse valeur 5: ");
-  Serial.println(&valeurEEPROM[4]);
-  Serial.print("adresse valeur 6: ");
-  Serial.println(&valeurEEPROM[5]); 
-  Serial.print("adresse valeur 7: ");
-  Serial.println(&valeurEEPROM[6]);
-  Serial.print("adresse valeur 8: ");
-  Serial.println(&valeurEEPROM[7]);
+  Serial.print("valeur 1: ");
+  Serial.println(valeurEEPROM[0]);
+  Serial.print("valeur 2: ");
+  Serial.println(valeurEEPROM[1]);
+  Serial.print("valeur 3: ");
+  Serial.println(valeurEEPROM[2]);
+  Serial.print("valeur 4: ");
+  Serial.println(valeurEEPROM[3]);
   Serial.print("adresseValeurEEPROM : ");
   Serial.println(adresseValeurEEPROM);
   return adresseValeurEEPROM;

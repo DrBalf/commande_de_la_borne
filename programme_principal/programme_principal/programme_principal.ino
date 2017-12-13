@@ -12,6 +12,7 @@ void setup() {
   Wire.begin();
   initI2C(60);
   Serial3.begin(9600);
+  Serial.begin(9600);
   initAfficheur(0x3B);
   formeTerminal();
 }
