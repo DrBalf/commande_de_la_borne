@@ -1,8 +1,10 @@
 #ifndef EEPROM_H
 #define EEPROM_H
 
-void ecritureCodeEEPROM (void);
+void lectureEEPROM ( int, int, char*);
 
-char* lectureEEPROM (int);
+
+void ecritureCodeEEPROM (int, int, const char* );
+
 
 #endif

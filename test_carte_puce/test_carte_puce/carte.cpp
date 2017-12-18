@@ -16,19 +16,22 @@ int presenceCarte (){
 
 char* lectureCarte(char* valeurPuce){
   int i=0;
+  char code[5]={'3','4','5','6','\0'};
+  Serial.print("_");
   if (presenceCarte()==0){
-
+      Serial.print("-");
       accesCarteOn();
            
       Wire.beginTransmission(0x50);
-      Wire.write(0x00);
-      Wire.endTransmission();
-      
-      Wire.requestFrom(0x50, 4);
-      while (Wire.available()){
-        valeurPuce[i]=Wire.read();
+        Wire.write(0x00);
+      while((*(code+i))!='\0'){
+        *(valeurPuce+i)=Wire.write(*(code+i));
+        Serial.print(*(code+i));
+        Serial.print(*(valeurPuce+i));
         i++;
       }
+      Wire.write('\0');
+      Wire.endTransmission();
 
       accesCarteOff();
   }
@@ -40,6 +43,7 @@ int validationCarte (){
   char adresseRef[4]={'3','4','5','6'};
   char valeurPuce[4]={'0','0','0','0'};
   char* adresseValeur;
+  Serial.print("go");
   adresseValeur=lectureCarte(valeurPuce);
   for(int i=0;i<4;i++){
       if(adresseValeur[i]==adresseRef[i]){
@@ -68,28 +72,4 @@ void accesCarteOff (void){
   
 }
 
-void initEEPROM(void){
-
-      int i=0;
-      
-      Wire.beginTransmission(0x57);
-      Wire.write(0x00);
-      Wire.endTransmission();
-
-      Wire.requestFrom(0x57, 4);
-      while (Wire.available()){
-        Wire.write(0x51+i);
-        i++;
-      }
-
-      Wire.beginTransmission(0x57);
-      Wire.write(0x00);
-      Wire.endTransmission();
-
-      Wire.requestFrom(0x57, 4);
-      while (Wire.available()){
-        Serial.println(Wire.read());       
-      }
-     
-}
 

@@ -5,8 +5,11 @@
 void afficheTerminal(int nombreVoiture, int nombrePlace){
     
     
-    terminalCouleur(31, 40);
-    terminalPosition(10,58);
+    terminalCouleur(31, 40); //terminalCouleur permet de changer les couleurs du terminal 
+                              //l'écriture et le fond. terminalCouleur(couleurEcriture, couleurFond). 
+
+    terminalPosition(10,58);  //terminalPosition permet de positionner le curseur avec en premier 
+                              //paramètre la ligne (10) puis la colonne(58).
     Serial3.println(nombreVoiture, DEC);
     
     terminalCouleur(31, 40);

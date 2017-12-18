@@ -15,7 +15,7 @@ void ouvrir (){
 void fermer (){
   Wire.beginTransmission(0x20);
   Wire.write(0xFE);         //on ecrit sur l'adresse 0x20 la valeur 0xFE qui 
-  delay(50);                          //correspond a la valeur de fermeture de barriere 
+                          //correspond a la valeur de fermeture de barriere 
   Wire.endTransmission();
 }
 

@@ -22,19 +22,11 @@ int presenceCarte (){ //fonction permettant de détecter ou non un carte
 
 char* lectureCarte(char* valeurPuce){ //fonction permettant de lire le code de la carte
   int i=0;
-  char valeurCodeEEPROM[5]={'3','4','5','6','\0'};
-  
   if (presenceCarte()==0){ // on exécute le programe que si la carte est detecter
 
       accesCarteOn(); //on autosrise la lecture de la carte        
 
-      Wire.beginTransmission(0x50);
-      Wire.write((char)(0x00));
-      Wire.write(valeurCodeEEPROM,4);
-      Wire.endTransmission();
-
-      Serial.println (valeurCodeEEPROM);
-           
+  
       Wire.beginTransmission(0x50); // ici on indique que l'on veux lire 
       Wire.write(0x00); // les valeurs a partire de l'adresse 0x00
       Wire.endTransmission();
